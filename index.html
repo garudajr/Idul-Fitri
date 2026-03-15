@@ -1,198 +1,151 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EID_SURPRISE.EXE</title>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <title>Kejutan Idul Fitri 🌙</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --win-blue: #000080;
-            --win-grey: #c0c0c0;
-            --win-white: #ffffff;
-            --win-black: #000000;
-        }
+        * { box-sizing: border-box; }
+        body { font-family: 'Quicksand', sans-serif; background-color: #FFF9F0; }
+        
+        /* Animasi Kustom dari Kode Canva Kamu */
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        @keyframes bounceIn { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); } }
+        @keyframes confettiFall { 0% { transform: translateY(-10px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+        @keyframes letterOpen { 0% { transform: scale(0.5) translateY(20px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
 
-        body {
-            background-color: #55aaaa; /* Warna hijau khas Windows jadul */
-            font-family: 'VT323', monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-
-        /* Container Jendela */
-        .window {
-            background: var(--win-grey);
-            width: 100%;
-            max-width: 450px;
-            border: 2px solid;
-            border-color: var(--win-white) var(--win-black) var(--win-black) var(--win-white);
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
-            padding: 3px;
-        }
-
-        /* Title Bar */
-        .title-bar {
-            background: linear-gradient(90deg, var(--win-blue), #1084d0);
-            padding: 5px 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            font-size: 20px;
-        }
-
-        .title-bar-controls button {
-            width: 20px;
-            height: 20px;
-            font-family: Arial;
-            font-size: 12px;
-            padding: 0;
-            cursor: pointer;
-            background: var(--win-grey);
-            border: 1px solid;
-            border-color: white black black white;
-        }
-
-        /* Konten Dalam */
-        .window-body {
-            padding: 20px;
-            text-align: center;
-        }
-
-        h2 { font-size: 32px; margin: 10px 0; color: var(--win-black); }
-        p { font-size: 22px; margin: 10px 0; color: #333; }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            font-family: 'VT323', monospace;
-            font-size: 20px;
-            border: 2px solid;
-            border-color: black white white black;
-            background: white;
-            box-sizing: border-box;
-            margin: 15px 0;
-            outline: none;
-        }
-
-        button.btn-win {
-            padding: 10px 25px;
-            font-family: 'VT323', monospace;
-            font-size: 22px;
-            background: var(--win-grey);
-            border: 2px solid;
-            border-color: white black black white;
-            cursor: pointer;
-            outline: none;
-        }
-
-        button.btn-win:active {
-            border-color: black white white black;
-            transform: translate(1px, 1px);
-        }
-
-        /* Layar Hasil */
-        #result { display: none; }
-
-        .letter-box {
-            background: white;
-            border: 2px solid black;
-            padding: 15px;
-            text-align: left;
-            font-size: 18px;
-            line-height: 1.4;
-            max-height: 300px;
-            overflow-y: auto;
-            white-space: pre-line;
-            margin-bottom: 20px;
-        }
-
-        .char-sprite { font-size: 60px; margin-bottom: 10px; }
-
-        /* Scrollbar ala jadul */
-        ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-track { background: var(--win-grey); }
-        ::-webkit-scrollbar-thumb { background: #888; border: 2px solid var(--win-grey); }
+        .float-anim { animation: float 3s ease-in-out infinite; }
+        .letter-open { animation: letterOpen 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .confetti-piece { position: fixed; width: 10px; height: 10px; z-index: 100; pointer-events: none; animation: confettiFall 3s linear forwards; }
+        
+        .screen-transition { transition: all 0.5s ease; }
+        .screen-hidden { display: none; opacity: 0; }
+        .dot-pattern { background-image: radial-gradient(circle, rgba(255,183,77,0.15) 1px, transparent 1px); background-size: 24px 24px; }
+        
+        .btn-surprise { background: linear-gradient(135deg, #FFB74D, #FF8A65); transition: all 0.3s ease; }
+        .btn-surprise:hover { transform: scale(1.05); filter: brightness(1.1); }
     </style>
 </head>
-<body>
+<body class="h-full dot-pattern">
 
-<div class="window">
-    <div class="title-bar">
-        <div class="title-bar-text">C:\SURPRISE\EID_MUBARAK.EXE</div>
-        <div class="title-bar-controls">
-            <button>_</button>
-            <button>□</button>
-            <button onclick="location.reload()">×</button>
+    <div id="app" class="flex items-center justify-center min-h-full px-4 relative overflow-hidden">
+        
+        <div id="screen-landing" class="screen-transition text-center flex flex-col items-center">
+            <div class="float-anim mb-6">
+                <svg width="140" height="140" viewbox="0 0 140 140">
+                    <rect x="20" y="55" width="100" height="70" rx="12" fill="#FFB74D" />
+                    <rect x="15" y="45" width="110" height="22" rx="8" fill="#FF8A65" />
+                    <ellipse cx="58" cy="40" rx="16" ry="14" fill="#EF5350" />
+                    <ellipse cx="82" cy="40" rx="16" ry="14" fill="#EF5350" />
+                    <circle cx="50" cy="82" r="5" fill="#5D4037" />
+                    <circle cx="90" cy="82" r="5" fill="#5D4037" />
+                    <path d="M58 95 Q70 108 82 95" stroke="#5D4037" stroke-width="3" fill="none" stroke-linecap="round" />
+                </svg>
+            </div>
+            <h1 class="text-4xl font-bold mb-3" style="font-family: 'Caveat', cursive; color: #4E342E;">Ada Kejutan Lebaran!</h1>
+            <p class="text-lg mb-8 text-orange-800 opacity-70">Seseorang mengirimkan paket spesial untukmu...</p>
+            <button onclick="changeScreen('screen-name')" class="btn-surprise text-white font-bold px-10 py-4 rounded-2xl shadow-lg flex items-center gap-3">
+                Buka Paketmu <i data-lucide="package"></i>
+            </button>
         </div>
+
+        <div id="screen-name" class="screen-transition screen-hidden w-full max-w-sm text-center">
+            <h2 class="text-3xl font-bold mb-6" style="font-family: 'Caveat', cursive; color: #4E342E;">Siapa Namamu? 💌</h2>
+            <div class="bg-white p-6 rounded-3xl shadow-xl border-2 border-orange-100">
+                <input id="name-input" type="text" placeholder="Ketik nama panggilanmu..." 
+                    class="w-full px-5 py-4 rounded-xl border-2 border-gray-100 focus:border-orange-400 focus:outline-none text-lg text-center">
+                <button onclick="processName()" class="btn-surprise w-full text-white font-bold py-4 rounded-xl mt-4 shadow-md flex items-center justify-center gap-2">
+                    Kirim Pesan <i data-lucide="send"></i>
+                </button>
+            </div>
+            <button onclick="changeScreen('screen-landing')" class="mt-6 text-orange-300 flex items-center gap-1 mx-auto text-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali
+            </button>
+        </div>
+
+        <div id="screen-greeting" class="screen-transition screen-hidden w-full max-w-md">
+            <div id="confetti-container"></div>
+            <div id="letter-card" class="bg-white rounded-3xl p-8 shadow-2xl relative border-2 border-orange-50 letter-open">
+                <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-red-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg text-2xl">
+                    🌙
+                </div>
+                <p class="text-xs font-bold text-orange-300 uppercase tracking-widest mb-1">Spesial Untuk:</p>
+                <h3 id="display-name" class="text-3xl font-bold mb-4" style="font-family: 'Caveat', cursive; color: #4E342E;">Nama</h3>
+                <div class="h-1 w-12 bg-orange-100 rounded-full mb-6"></div>
+                
+                <div id="display-message" class="text-gray-600 leading-relaxed text-sm sm:text-base italic whitespace-pre-line">
+                    </div>
+
+                <div class="mt-8 pt-6 border-t border-orange-50 flex items-center justify-between">
+                    <span class="text-xs text-orange-200">✨ Eid Mubarak 2026</span>
+                    <span class="text-pink-400 text-lg flex items-center gap-1">❤️ <span class="text-xs text-gray-400">Dari Temanmu</span></span>
+                </div>
+            </div>
+            <button onclick="location.reload()" class="mt-8 w-full py-3 bg-orange-50 text-orange-400 font-bold rounded-xl border-2 border-orange-100 flex items-center justify-center gap-2">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i> Coba Nama Lain
+            </button>
+        </div>
+
     </div>
 
-    <div class="window-body" id="input-screen">
-        <div class="char-sprite">💾</div>
-        <h2>DANA KAGET?</h2>
-        <p>SYSTEM DETECTING: Surprise Found!<br>Enter your name to unlock:</p>
-        <input type="text" id="namaInput" placeholder="TYPE NAME HERE..." autocomplete="off">
-        <button class="btn-win" onclick="bukaAmplop()">[ RUN PROGRAM ]</button>
-    </div>
+    <script>
+        // Logika Database Berdasarkan File Kamu
+        const letterData = {
+            'ABCDE': "Selamat merayakan Idul Fitri, semoga hari-harimu selalu dipenuhi senyuman dan kebahagiaan.\n\nHalo, Selamat Hari Raya Idul Fitri!\n\nDi hari yang suci ini aku ingin mengucapkan mohon maaf lahir dan batin atas segala kesalahan kata maupun sikap yang mungkin pernah terjadi, baik yang disengaja maupun tidak.\n\nSemoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan keberkahan untukmu dan keluargamu.",
+            'FGHIJ': "Selamat merayakan Idul Fitri!\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kebahagiaan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama kita saling mengenal ada kata atau sikapku yang kurang berkenan, aku minta maaf ya.\n\nSemoga Idul Fitri ini membawa banyak kebahagiaan, keberkahan, dan kebaikan dalam hidupmu.",
+            'KLMNO': "Selamat merayakan hari kemenangan bersama keluarga. Semoga harimu dipenuhi tawa dan kebahagiaan.\n\nHalo! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kemenangan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama ini ada kata-kata atau sikapku yang kurang baik, aku dengan tulus meminta maaf.\n\nSemoga di hari yang suci ini kamu selalu diberikan kebahagiaan dan kesehatan.",
+            'PQRST': "Selamat merayakan Idul Fitri, semoga hari-harimu selalu penuh kebaikan dan senyuman.\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh berkah ini, aku ingin mengucapkan mohon maaf lahir dan batin. Mungkin selama kita jadi mutual ada kata yang kurang tepat, aku minta maaf ya.\n\nSemoga Idul Fitri ini membawa kebahagiaan dan banyak keberkahan.",
+            'UVWXYZ': "Selamat merayakan hari kemenangan!\n\nSemoga kita semua selalu diberikan kebaikan di setiap langkah."
+        };
 
-    <div class="window-body" id="result">
-        <div class="char-sprite" id="charDisplay">😇</div>
-        <h2 id="titleDisplay">ACCESS GRANTED!</h2>
-        <div class="letter-box" id="textContent"></div>
-        <button class="btn-win" onclick="location.reload()">[ REBOOT ]</button>
-    </div>
-</div>
-
-<script>
-    function bukaAmplop() {
-        const nama = document.getElementById('namaInput').value.trim();
-        if (!nama) {
-            alert("ERROR: Name required to proceed!");
-            return;
+        function changeScreen(screenId) {
+            document.querySelectorAll('.screen-transition').forEach(s => s.classList.add('screen-hidden'));
+            document.getElementById(screenId).classList.remove('screen-hidden');
+            lucide.createIcons();
         }
 
-        const hurufDepan = nama.charAt(0).toUpperCase();
-        let pesan = "";
-        let emoji = "";
+        function processName() {
+            const name = document.getElementById('name-input').value.trim();
+            if (!name) return alert("Isi namamu dulu ya ✨");
 
-        // DATA SURAT KAMU
-        if ("ABCDE".includes(hurufDepan)) {
-            emoji = "😇";
-            pesan = `Selamat merayakan Idul Fitri, semoga hari-harimu selalu dipenuhi senyuman dan kebahagiaan.\n\nHalo, Selamat Hari Raya Idul Fitri!\n\nDi hari yang suci ini aku ingin mengucapkan mohon maaf lahir dan batin atas segala kesalahan kata maupun sikap yang mungkin pernah terjadi, baik yang disengaja maupun tidak.\n\nSemoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan keberkahan untukmu dan keluargamu. Semoga kita semua menjadi pribadi yang lebih baik setelah melewati bulan Ramadan.`;
-        } 
-        else if ("FGHIJ".includes(hurufDepan)) {
-            emoji = "😎";
-            pesan = `Selamat merayakan Idul Fitri!\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kebahagiaan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama kita saling mengenal ada kata atau sikapku yang kurang berkenan, aku minta maaf ya.\n\nTerima kasih juga sudah menjadi mutual yang baik. Semoga di hari kemenangan ini kamu dan keluargamu selalu diberikan kesehatan, kebahagiaan, serta keberkahan.`;
-        } 
-        else if ("KLMNO".includes(hurufDepan)) {
-            emoji = "🤩";
-            pesan = `Selamat merayakan hari kemenangan bersama keluarga. Semoga harimu dipenuhi tawa dan kebahagiaan.\n\nHalo! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kemenangan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama ini ada kata-kata atau sikapku yang kurang baik, aku dengan tulus meminta maaf.\n\nSemoga di hari yang suci ini kamu selalu diberikan kebahagiaan, kesehatan, dan keberkahan bersama orang-orang tersayang. Terima kasih sudah menjadi mutual yang baik selama ini.`;
-        } 
-        else if ("PQRST".includes(hurufDepan)) {
-            emoji = "✨";
-            pesan = `Selamat merayakan Idul Fitri, semoga hari-harimu selalu penuh kebaikan dan senyuman.\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh berkah ini, aku ingin mengucapkan mohon maaf lahir dan batin. Mungkin selama kita jadi mutual ada kata yang kurang tepat atau sikap yang tidak sengaja menyakiti hati, aku minta maaf ya.\n\nSemoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan banyak keberkahan untukmu dan keluargamu. Terima kasih sudah menjadi mutual yang baik.`;
-        } 
-        else if ("UVWXYZ".includes(hurufDepan)) {
-            emoji = "🌙";
-            pesan = `Selamat merayakan hari kemenangan! \n\nSemoga kita semua selalu diberikan kebaikan di setiap langkah.`;
-        } 
-        else {
-            emoji = "🎁";
-            pesan = "Selamat Hari Raya Idul Fitri! Mohon maaf lahir dan batin ya. Semoga kebahagiaan selalu menyertaimu.";
+            const firstLetter = name.charAt(0).toUpperCase();
+            let finalMessage = "Selamat Idul Fitri! Mohon maaf lahir dan batin.";
+
+            // Cari di grup mana huruf depan berada
+            for (const key in letterData) {
+                if (key.includes(firstLetter)) {
+                    finalMessage = letterData[key];
+                    break;
+                }
+            }
+
+            document.getElementById('display-name').textContent = name;
+            document.getElementById('display-message').textContent = finalMessage;
+            
+            changeScreen('screen-greeting');
+            launchConfetti();
         }
 
-        document.getElementById('input-screen').style.display = 'none';
-        document.getElementById('result').style.display = 'block';
-        document.getElementById('charDisplay').innerText = emoji;
-        document.getElementById('titleDisplay').innerText = "BUAT: " + nama.toUpperCase();
-        document.getElementById('textContent').innerText = pesan;
-    }
-</script>
+        function launchConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#FFB74D', '#FF8A65', '#EF5350', '#81C784', '#64B5F6'];
+            for (let i = 0; i < 50; i++) {
+                const p = document.createElement('div');
+                p.className = 'confetti-piece';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                p.style.animationDelay = Math.random() * 2 + 's';
+                p.style.width = (Math.random() * 10 + 5) + 'px';
+                p.style.height = p.style.width;
+                container.appendChild(p);
+            }
+        }
 
+        lucide.createIcons();
+    </script>
 </body>
 </html>

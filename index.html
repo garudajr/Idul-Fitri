@@ -5,75 +5,217 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amplop Kejutan Lebaran</title>
     <style>
-        :root { --red-dana: #d32f2f; --gold: #ffca28; }
-        body { font-family: 'Segoe UI', sans-serif; background: #fdf2f2; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .card { background: white; width: 90%; max-width: 400px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; border: 3px solid var(--gold); }
-        .dana-header { background: var(--red-dana); color: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; font-weight: bold; }
-        input { width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 10px; margin: 15px 0; box-sizing: border-box; font-size: 16px; outline: none; }
-        .btn-buka { background: var(--gold); color: #333; border: none; padding: 15px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; transition: 0.3s; }
-        .btn-buka:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255, 202, 40, 0.4); }
-        #result { display: none; text-align: left; animation: slideUp 0.5s ease-out; }
-        .char-icon { font-size: 70px; text-align: center; margin-bottom: 15px; }
-        .letter-content { line-height: 1.6; font-size: 14px; color: #444; background: #fff9e6; padding: 15px; border-radius: 10px; border-left: 5px solid var(--gold); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        :root {
+            --red-dana: #d32f2f;
+            --gold: #ffca28;
+            --light-bg: #fdf2f2;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 4px solid var(--gold);
+            box-sizing: border-box;
+        }
+
+        .dana-header {
+            background: var(--red-dana);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+        }
+
+        p { color: #555; line-height: 1.5; }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-sizing: border-box;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--red-dana); }
+
+        .btn-buka {
+            background: var(--gold);
+            color: #333;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(255, 202, 40, 0.4);
+            transition: 0.3s;
+        }
+
+        .btn-buka:hover { transform: scale(1.03); }
+
+        /* Tampilan Hasil */
+        #result {
+            display: none;
+            text-align: left;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .char-icon {
+            font-size: 80px;
+            text-align: center;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .recipient-name {
+            text-align: center;
+            color: var(--red-dana);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .letter-content {
+            background: #fff9e6;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 6px solid var(--gold);
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+            white-space: pre-line; /* Menjaga spasi/paragraf */
+        }
+
+        .btn-reset {
+            margin-top: 20px;
+            width: 100%;
+            background: #f0f0f0;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
 <div class="card">
     <div id="input-screen">
-        <div class="dana-header">🧧 DANA KAGET LEBARAN</div>
-        <p>Cek keberuntunganmu hari ini!<br>Masukkan nama panggilanmu:</p>
-        <input type="text" id="namaUser" placeholder="Contoh: Agung">
-        <button class="btn-buka" onclick="tampilkanSurat()">BUKA SEKARANG</button>
+        <div class="dana-header">🧧 DANA KAGET?</div>
+        <p>Bukan uang, tapi ada pesan spesial yang jauh lebih berharga buat kamu!</p>
+        <input type="text" id="namaInput" placeholder="Masukkan nama kamu..." autocomplete="off">
+        <button class="btn-buka" onclick="bukaAmplop()">BUKA SEKARANG</button>
     </div>
 
     <div id="result">
-        <div class="char-icon" id="charDisplay">🌙</div>
-        <h3 style="text-align:center; color: #d32f2f;" id="titleDisplay">Selamat Idul Fitri!</h3>
+        <span class="char-icon" id="charDisplay">😇</span>
+        <h2 class="recipient-name" id="titleDisplay">Buat Kamu</h2>
         <div class="letter-content" id="textContent"></div>
-        <br>
-        <button onclick="location.reload()" style="width:100%; background: #eee; border:none; padding:10px; border-radius:10px; cursor:pointer;">Cek Nama Lain</button>
+        <button class="btn-reset" onclick="location.reload()">Coba Nama Lain</button>
     </div>
 </div>
 
 <script>
-    function tampilkanSurat() {
-        const nama = document.getElementById('namaUser').value.trim();
-        if (!nama) return alert("Isi nama dulu, kawan!");
-
-        const huruf = nama.charAt(0).toUpperCase();
-        let teks = "";
-        let karakter = "";
-        let judul = "Buat " + nama;
-
-        // Logika Berdasarkan Database Kamu 
-        if ("ABCDE".includes(huruf)) {
-            karakter = "😇";
-            teks = "Selamat merayakan Idul Fitri, semoga hari-harimu selalu dipenuhi senyuman dan kebahagiaan. Halo, Selamat Hari Raya Idul Fitri! Di hari yang suci ini aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama jadi mutual ada kata yang kurang berkenan atau sikap yang tidak menyenangkan, aku benar-benar minta maaf ya. Terima kasih juga sudah menjadi mutual yang baik. Semoga di hari kemenangan ini kamu dan keluargamu selalu diberikan kesehatan, kebahagiaan, serta keberkahan.";
-        } else if ("FGHIJ".includes(huruf)) {
-            karakter = "😎";
-            teks = "Selamat merayakan Idul Fitri! Hai! Selamat Hari Raya Idul Fitri. Di hari yang penuh kebahagiaan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama kita saling mengenal ada kata atau sikapku yang kurang berkenan, aku minta maaf ya. Semoga Idul Fitri ini membawa banyak kebahagiaan, keberkahan, dan kebaikan dalam hidupmu. Semoga kita semua bisa menjadi pribadi yang lebih baik setelah Ramadan ini.";
-        } else if ("KLMNO".includes(huruf)) {
-            karakter = "🤩";
-            teks = "Selamat merayakan hari kemenangan bersama keluarga. Semoga harimu dipenuhi tawa dan kebahagiaan. Halo! Selamat Hari Raya Idul Fitri. Di hari yang penuh kemenangan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama ini ada kata-kata atau sikapku yang kurang baik, aku dengan tulus meminta maaf. Semoga di hari yang suci ini kamu selalu diberikan kebahagiaan, kesehatan, dan keberkahan bersama orang-orang tersayang. Terima kasih sudah menjadi mutual yang baik selama ini.";
-        } else if ("PQRST".includes(huruf)) {
-            karakter = "✨";
-            teks = "Selamat merayakan Idul Fitri, semoga hari-harimu selalu penuh kebaikan dan senyuman. Hai! Selamat Hari Raya Idul Fitri. Di hari yang penuh berkah ini, aku ingin mengucapkan mohon maaf lahir dan batin. Mungkin selama kita jadi mutual ada kata yang kurang tepat atau sikap yang tidak sengaja menyakiti hati, aku minta maaf ya. Semoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan banyak keberkahan untukmu dan keluargamu. Terima kasih sudah menjadi mutual yang baik.";
-        } else if ("UVWXYZ".includes(huruf)) {
-            karakter = "🌙";
-            teks = "Selamat merayakan hari kemenangan! Semoga kita semua selalu diberikan kebaikan di setiap langkah.";
-        } else {
-            karakter = "🎁";
-            teks = "Halo, selamat Hari Raya Idul Fitri! Di hari yang penuh berkah ini, aku ingin mengucapkan mohon maaf lahir dan batin atas segala kesalahan kata maupun sikap yang mungkin pernah terjadi. Semoga Idul Fitri ini membawa kebahagiaan untukmu dan keluargamu.";
+    function bukaAmplop() {
+        const nama = document.getElementById('namaInput').value.trim();
+        if (!nama) {
+            alert("Masukkan namamu dulu ya!");
+            return;
         }
 
+        const hurufDepan = nama.charAt(0).toUpperCase();
+        let pesan = "";
+        let emoji = "";
+
+        // DATABASE BERDASARKAN ABJAD 
+        if ("ABCDE".includes(hurufDepan)) {
+            emoji = "😇";
+            pesan = `Selamat merayakan Idul Fitri, semoga hari-harimu selalu dipenuhi senyuman dan kebahagiaan.
+
+Halo, Selamat Hari Raya Idul Fitri!
+
+Di hari yang suci ini aku ingin mengucapkan mohon maaf lahir dan batin atas segala kesalahan kata maupun sikap yang mungkin pernah terjadi, baik yang disengaja maupun tidak.
+
+Semoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan keberkahan untukmu dan keluargamu. Semoga kita semua menjadi pribadi yang lebih baik setelah melewati bulan Ramadan.`;
+        } 
+        else if ("FGHIJ".includes(hurufDepan)) {
+            emoji = "😎";
+            pesan = `Selamat merayakan Idul Fitri!
+
+Hai! Selamat Hari Raya Idul Fitri.
+
+Di hari yang penuh kebahagiaan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama kita saling mengenal ada kata atau sikapku yang kurang berkenan atau sikap yang tidak menyenangkan, aku benar-benar minta maaf ya.
+
+Terima kasih juga sudah menjadi mutual yang baik. Semoga di hari kemenangan ini kamu dan keluargamu selalu diberikan kesehatan, kebahagiaan, serta keberkahan.`;
+        } 
+        else if ("KLMNO".includes(hurufDepan)) {
+            emoji = "🤩";
+            pesan = `Selamat merayakan hari kemenangan bersama keluarga. Semoga harimu dipenuhi tawa dan kebahagiaan.
+
+Halo! Selamat Hari Raya Idul Fitri.
+
+Di hari yang penuh kemenangan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama ini ada kata-kata atau sikapku yang kurang baik, aku dengan tulus meminta maaf.
+
+Semoga di hari yang suci ini kamu selalu diberikan kebahagiaan, kesehatan, dan keberkahan bersama orang-orang tersayang. Terima kasih sudah menjadi mutual yang baik selama ini.`;
+        } 
+        else if ("PQRST".includes(hurufDepan)) {
+            emoji = "✨";
+            pesan = `Selamat merayakan Idul Fitri, semoga hari-harimu selalu penuh kebaikan dan senyuman.
+
+Hai! Selamat Hari Raya Idul Fitri.
+
+Di hari yang penuh berkah ini, aku ingin mengucapkan mohon maaf lahir dan batin. Mungkin selama kita jadi mutual ada kata yang kurang tepat atau sikap yang tidak sengaja menyakiti hati, aku minta maaf ya.
+
+Semoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan banyak keberkahan untukmu dan keluargamu. Terima kasih sudah menjadi mutual yang baik.`;
+        } 
+        else if ("UVWXYZ".includes(hurufDepan)) {
+            emoji = "🌙";
+            pesan = `Selamat merayakan hari kemenangan!
+
+Semoga kita semua selalu diberikan kebaikan di setiap langkah.`;
+        } 
+        else {
+            // Default jika simbol atau angka
+            emoji = "🎁";
+            pesan = "Halo, selamat Hari Raya Idul Fitri! Mohon maaf lahir dan batin ya. Semoga kebahagiaan selalu menyertaimu.";
+        }
+
+        // Tampilkan Hasil
         document.getElementById('input-screen').style.display = 'none';
         document.getElementById('result').style.display = 'block';
-        document.getElementById('charDisplay').innerText = karakter;
-        document.getElementById('titleDisplay').innerText = judul;
-        document.getElementById('textContent').innerText = teks;
+        document.getElementById('charDisplay').innerText = emoji;
+        document.getElementById('titleDisplay').innerText = "Buat " + nama;
+        document.getElementById('textContent').innerText = pesan;
     }
 </script>
+
 </body>
 </html>

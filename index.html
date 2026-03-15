@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="h-full">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,33 +9,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
-        * { box-sizing: border-box; }
         body { font-family: 'Quicksand', sans-serif; background-color: #FFF9F0; }
         
-        /* Animasi Kustom dari Kode Canva Kamu */
+        /* Animasi */
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
-        @keyframes bounceIn { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); } }
+        @keyframes letterOpen { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes confettiFall { 0% { transform: translateY(-10px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
-        @keyframes letterOpen { 0% { transform: scale(0.5) translateY(20px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
 
         .float-anim { animation: float 3s ease-in-out infinite; }
-        .letter-open { animation: letterOpen 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-        .confetti-piece { position: fixed; width: 10px; height: 10px; z-index: 100; pointer-events: none; animation: confettiFall 3s linear forwards; }
+        .letter-open { animation: letterOpen 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .confetti-piece { position: fixed; width: 8px; height: 8px; z-index: 100; pointer-events: none; animation: confettiFall 3s linear forwards; }
         
-        .screen-transition { transition: all 0.5s ease; }
-        .screen-hidden { display: none; opacity: 0; }
-        .dot-pattern { background-image: radial-gradient(circle, rgba(255,183,77,0.15) 1px, transparent 1px); background-size: 24px 24px; }
+        .dot-pattern { 
+            background-image: radial-gradient(circle, rgba(255,183,77,0.15) 1px, transparent 1px); 
+            background-size: 24px 24px; 
+        }
         
+        .screen-hidden { display: none; }
         .btn-surprise { background: linear-gradient(135deg, #FFB74D, #FF8A65); transition: all 0.3s ease; }
-        .btn-surprise:hover { transform: scale(1.05); filter: brightness(1.1); }
     </style>
 </head>
-<body class="h-full dot-pattern">
+<body class="dot-pattern">
 
-    <div id="app" class="flex items-center justify-center min-h-full px-4 relative overflow-hidden">
+    <div id="app" class="flex flex-col items-center justify-center min-h-screen w-full px-4 py-10 relative overflow-hidden">
         
-        <div id="screen-landing" class="screen-transition text-center flex flex-col items-center">
-            <div class="float-anim mb-6">
+        <div id="screen-landing" class="w-full max-w-sm text-center">
+            <div class="float-anim mb-8 flex justify-center">
                 <svg width="140" height="140" viewbox="0 0 140 140">
                     <rect x="20" y="55" width="100" height="70" rx="12" fill="#FFB74D" />
                     <rect x="15" y="45" width="110" height="22" rx="8" fill="#FF8A65" />
@@ -47,17 +46,20 @@
                 </svg>
             </div>
             <h1 class="text-4xl font-bold mb-3" style="font-family: 'Caveat', cursive; color: #4E342E;">Ada Kejutan Lebaran!</h1>
-            <p class="text-lg mb-8 text-orange-800 opacity-70">Seseorang mengirimkan paket spesial untukmu...</p>
-            <button onclick="changeScreen('screen-name')" class="btn-surprise text-white font-bold px-10 py-4 rounded-2xl shadow-lg flex items-center gap-3">
+            <p class="text-lg mb-10 text-orange-800 opacity-70">Seseorang mengirimkan paket spesial...</p>
+            <button onclick="changeScreen('screen-name')" class="btn-surprise text-white font-bold px-10 py-4 rounded-2xl shadow-lg flex items-center gap-3 mx-auto">
                 Buka Paketmu <i data-lucide="package"></i>
             </button>
         </div>
 
-        <div id="screen-name" class="screen-transition screen-hidden w-full max-w-sm text-center">
+        <div id="screen-name" class="screen-hidden w-full max-w-sm text-center">
+            <div class="mb-6 flex justify-center">
+                 <i data-lucide="mail" class="w-12 h-12 text-orange-300"></i>
+            </div>
             <h2 class="text-3xl font-bold mb-6" style="font-family: 'Caveat', cursive; color: #4E342E;">Siapa Namamu? 💌</h2>
             <div class="bg-white p-6 rounded-3xl shadow-xl border-2 border-orange-100">
-                <input id="name-input" type="text" placeholder="Ketik nama panggilanmu..." 
-                    class="w-full px-5 py-4 rounded-xl border-2 border-gray-100 focus:border-orange-400 focus:outline-none text-lg text-center">
+                <input id="name-input" type="text" placeholder="Ketik namamu di sini..." 
+                    class="w-full px-5 py-4 rounded-xl border-2 border-gray-100 focus:border-orange-400 focus:outline-none text-lg text-center text-orange-900">
                 <button onclick="processName()" class="btn-surprise w-full text-white font-bold py-4 rounded-xl mt-4 shadow-md flex items-center justify-center gap-2">
                     Kirim Pesan <i data-lucide="send"></i>
                 </button>
@@ -67,25 +69,25 @@
             </button>
         </div>
 
-        <div id="screen-greeting" class="screen-transition screen-hidden w-full max-w-md">
+        <div id="screen-greeting" class="screen-hidden w-full max-w-md">
             <div id="confetti-container"></div>
-            <div id="letter-card" class="bg-white rounded-3xl p-8 shadow-2xl relative border-2 border-orange-50 letter-open">
+            <div id="letter-card" class="bg-white rounded-3xl p-8 shadow-2xl relative border-2 border-orange-50 letter-open mx-auto">
                 <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-red-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg text-2xl">
                     🌙
                 </div>
-                <p class="text-xs font-bold text-orange-300 uppercase tracking-widest mb-1">Spesial Untuk:</p>
-                <h3 id="display-name" class="text-3xl font-bold mb-4" style="font-family: 'Caveat', cursive; color: #4E342E;">Nama</h3>
-                <div class="h-1 w-12 bg-orange-100 rounded-full mb-6"></div>
+                <p class="text-xs font-bold text-orange-300 uppercase tracking-widest mb-1 text-center">Spesial Untuk:</p>
+                <h3 id="display-name" class="text-3xl font-bold mb-4 text-center" style="font-family: 'Caveat', cursive; color: #4E342E;">Nama</h3>
+                <div class="h-1 w-12 bg-orange-100 rounded-full mb-6 mx-auto"></div>
                 
-                <div id="display-message" class="text-gray-600 leading-relaxed text-sm sm:text-base italic whitespace-pre-line">
+                <div id="display-message" class="text-gray-600 leading-relaxed text-sm sm:text-base whitespace-pre-line bg-orange-50/50 p-4 rounded-2xl border border-dashed border-orange-200">
                     </div>
 
                 <div class="mt-8 pt-6 border-t border-orange-50 flex items-center justify-between">
-                    <span class="text-xs text-orange-200">✨ Eid Mubarak 2026</span>
-                    <span class="text-pink-400 text-lg flex items-center gap-1">❤️ <span class="text-xs text-gray-400">Dari Temanmu</span></span>
+                    <span class="text-[10px] text-orange-200 font-bold tracking-tighter">✨ EID MUBARAK 2026</span>
+                    <span class="text-pink-400 text-lg flex items-center gap-1">❤️ <span class="text-[10px] font-bold text-gray-400 uppercase">DARI TEMANMU</span></span>
                 </div>
             </div>
-            <button onclick="location.reload()" class="mt-8 w-full py-3 bg-orange-50 text-orange-400 font-bold rounded-xl border-2 border-orange-100 flex items-center justify-center gap-2">
+            <button onclick="location.reload()" class="mt-8 w-full max-w-sm mx-auto py-3 bg-white text-orange-400 font-bold rounded-xl border-2 border-orange-100 shadow-sm flex items-center justify-center gap-2">
                 <i data-lucide="refresh-cw" class="w-4 h-4"></i> Coba Nama Lain
             </button>
         </div>
@@ -93,29 +95,28 @@
     </div>
 
     <script>
-        // Logika Database Berdasarkan File Kamu
         const letterData = {
             'ABCDE': "Selamat merayakan Idul Fitri, semoga hari-harimu selalu dipenuhi senyuman dan kebahagiaan.\n\nHalo, Selamat Hari Raya Idul Fitri!\n\nDi hari yang suci ini aku ingin mengucapkan mohon maaf lahir dan batin atas segala kesalahan kata maupun sikap yang mungkin pernah terjadi, baik yang disengaja maupun tidak.\n\nSemoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan keberkahan untukmu dan keluargamu.",
             'FGHIJ': "Selamat merayakan Idul Fitri!\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kebahagiaan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama kita saling mengenal ada kata atau sikapku yang kurang berkenan, aku minta maaf ya.\n\nSemoga Idul Fitri ini membawa banyak kebahagiaan, keberkahan, dan kebaikan dalam hidupmu.",
             'KLMNO': "Selamat merayakan hari kemenangan bersama keluarga. Semoga harimu dipenuhi tawa dan kebahagiaan.\n\nHalo! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kemenangan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama ini ada kata-kata atau sikapku yang kurang baik, aku dengan tulus meminta maaf.\n\nSemoga di hari yang suci ini kamu selalu diberikan kebahagiaan dan kesehatan.",
             'PQRST': "Selamat merayakan Idul Fitri, semoga hari-harimu selalu penuh kebaikan dan senyuman.\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh berkah ini, aku ingin mengucapkan mohon maaf lahir dan batin. Mungkin selama kita jadi mutual ada kata yang kurang tepat, aku minta maaf ya.\n\nSemoga Idul Fitri ini membawa kebahagiaan dan banyak keberkahan.",
-            'UVWXYZ': "Selamat merayakan hari kemenangan!\n\nSemoga kita semua selalu diberikan kebaikan di setiap langkah."
+            'UVWXYZ': "Selamat merayakan hari kemenangan! 🌙\n\nSemoga kita semua selalu diberikan kebaikan di setiap langkah dan selalu dalam lindungan-Nya. Amin!"
         };
 
         function changeScreen(screenId) {
-            document.querySelectorAll('.screen-transition').forEach(s => s.classList.add('screen-hidden'));
+            document.querySelectorAll('#app > div').forEach(s => s.classList.add('screen-hidden'));
             document.getElementById(screenId).classList.remove('screen-hidden');
             lucide.createIcons();
         }
 
         function processName() {
-            const name = document.getElementById('name-input').value.trim();
+            const nameInput = document.getElementById('name-input');
+            const name = nameInput.value.trim();
             if (!name) return alert("Isi namamu dulu ya ✨");
 
             const firstLetter = name.charAt(0).toUpperCase();
             let finalMessage = "Selamat Idul Fitri! Mohon maaf lahir dan batin.";
 
-            // Cari di grup mana huruf depan berada
             for (const key in letterData) {
                 if (key.includes(firstLetter)) {
                     finalMessage = letterData[key];
@@ -133,13 +134,13 @@
         function launchConfetti() {
             const container = document.getElementById('confetti-container');
             const colors = ['#FFB74D', '#FF8A65', '#EF5350', '#81C784', '#64B5F6'];
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 40; i++) {
                 const p = document.createElement('div');
                 p.className = 'confetti-piece';
                 p.style.left = Math.random() * 100 + 'vw';
                 p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 p.style.animationDelay = Math.random() * 2 + 's';
-                p.style.width = (Math.random() * 10 + 5) + 'px';
+                p.style.width = (Math.random() * 8 + 4) + 'px';
                 p.style.height = p.style.width;
                 container.appendChild(p);
             }

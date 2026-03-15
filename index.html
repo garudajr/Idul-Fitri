@@ -3,147 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kejutan Idul Fitri 🌙</title>
+    <title>Kejutan Lebaran Thordey 🌙</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
         body { font-family: 'Quicksand', sans-serif; background-color: #FFF9F0; }
-        
-        /* Animasi */
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
-        @keyframes letterOpen { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes confettiFall { 0% { transform: translateY(-10px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
-
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes bounceIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         .float-anim { animation: float 3s ease-in-out infinite; }
-        .letter-open { animation: letterOpen 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-        .confetti-piece { position: fixed; width: 8px; height: 8px; z-index: 100; pointer-events: none; animation: confettiFall 3s linear forwards; }
-        
-        .dot-pattern { 
-            background-image: radial-gradient(circle, rgba(255,183,77,0.15) 1px, transparent 1px); 
-            background-size: 24px 24px; 
-        }
-        
+        .bounce-in { animation: bounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .dot-pattern { background-image: radial-gradient(circle, rgba(255,183,77,0.15) 1px, transparent 1px); background-size: 24px 24px; }
         .screen-hidden { display: none; }
-        .btn-surprise { background: linear-gradient(135deg, #FFB74D, #FF8A65); transition: all 0.3s ease; }
+        .btn-primary { background: linear-gradient(135deg, #FFB74D, #FF8A65); transition: all 0.3s; }
+        .cookie-reveal { animation: bounceIn 0.6s forwards; }
     </style>
 </head>
-<body class="dot-pattern">
+<body class="dot-pattern min-h-screen">
 
-    <div id="app" class="flex flex-col items-center justify-center min-h-screen w-full px-4 py-10 relative overflow-hidden">
+    <div id="app" class="flex flex-col items-center justify-center min-h-screen w-full px-4 py-10">
         
         <div id="screen-landing" class="w-full max-w-sm text-center">
             <div class="float-anim mb-8 flex justify-center">
-                <svg width="140" height="140" viewbox="0 0 140 140">
+                <svg width="120" height="120" viewbox="0 0 140 140">
                     <rect x="20" y="55" width="100" height="70" rx="12" fill="#FFB74D" />
                     <rect x="15" y="45" width="110" height="22" rx="8" fill="#FF8A65" />
-                    <ellipse cx="58" cy="40" rx="16" ry="14" fill="#EF5350" />
-                    <ellipse cx="82" cy="40" rx="16" ry="14" fill="#EF5350" />
                     <circle cx="50" cy="82" r="5" fill="#5D4037" />
                     <circle cx="90" cy="82" r="5" fill="#5D4037" />
-                    <path d="M58 95 Q70 108 82 95" stroke="#5D4037" stroke-width="3" fill="none" stroke-linecap="round" />
+                    <path d="M58 95 Q70 108 82 95" stroke="#5D4037" stroke-width="3" fill="none" />
                 </svg>
             </div>
-            <h1 class="text-4xl font-bold mb-3" style="font-family: 'Caveat', cursive; color: #4E342E;">Ada Kejutan Lebaran!</h1>
-            <p class="text-lg mb-10 text-orange-800 opacity-70">Seseorang mengirimkan paket spesial...</p>
-            <button onclick="changeScreen('screen-name')" class="btn-surprise text-white font-bold px-10 py-4 rounded-2xl shadow-lg flex items-center gap-3 mx-auto">
-                Buka Paketmu <i data-lucide="package"></i>
+            <h1 class="text-4xl font-bold mb-3 text-orange-950" style="font-family: 'Caveat', cursive;">Ada Paket dari Thordey!</h1>
+            <p class="text-orange-800 opacity-70 mb-10">Klik tombol di bawah buat ambil kejutanmu...</p>
+            <button onclick="changeScreen('screen-name')" class="btn-primary text-white font-bold px-10 py-4 rounded-2xl shadow-lg mx-auto flex items-center gap-2">
+                Buka Paket <i data-lucide="package"></i>
             </button>
         </div>
 
         <div id="screen-name" class="screen-hidden w-full max-w-sm text-center">
-            <div class="mb-6 flex justify-center">
-                 <i data-lucide="mail" class="w-12 h-12 text-orange-300"></i>
-            </div>
-            <h2 class="text-3xl font-bold mb-6" style="font-family: 'Caveat', cursive; color: #4E342E;">Siapa Namamu? 💌</h2>
+            <h2 class="text-3xl font-bold mb-6 text-orange-950" style="font-family: 'Caveat', cursive;">Siapa Namamu? 💌</h2>
             <div class="bg-white p-6 rounded-3xl shadow-xl border-2 border-orange-100">
-                <input id="name-input" type="text" placeholder="Ketik namamu di sini..." 
-                    class="w-full px-5 py-4 rounded-xl border-2 border-gray-100 focus:border-orange-400 focus:outline-none text-lg text-center text-orange-900">
-                <button onclick="processName()" class="btn-surprise w-full text-white font-bold py-4 rounded-xl mt-4 shadow-md flex items-center justify-center gap-2">
-                    Kirim Pesan <i data-lucide="send"></i>
+                <input id="name-input" type="text" placeholder="Masukkan nama..." 
+                    class="w-full px-5 py-4 rounded-xl border-2 border-orange-50 focus:border-orange-400 focus:outline-none text-center text-lg">
+                <button onclick="processName()" class="btn-primary w-full text-white font-bold py-4 rounded-xl mt-4 shadow-md flex items-center justify-center gap-2">
+                    Kirim <i data-lucide="send"></i>
                 </button>
             </div>
-            <button onclick="changeScreen('screen-landing')" class="mt-6 text-orange-300 flex items-center gap-1 mx-auto text-sm">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali
-            </button>
         </div>
 
         <div id="screen-greeting" class="screen-hidden w-full max-w-md">
-            <div id="confetti-container"></div>
-            <div id="letter-card" class="bg-white rounded-3xl p-8 shadow-2xl relative border-2 border-orange-50 letter-open mx-auto">
-                <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-red-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg text-2xl">
-                    🌙
-                </div>
-                <p class="text-xs font-bold text-orange-300 uppercase tracking-widest mb-1 text-center">Spesial Untuk:</p>
-                <h3 id="display-name" class="text-3xl font-bold mb-4 text-center" style="font-family: 'Caveat', cursive; color: #4E342E;">Nama</h3>
-                <div class="h-1 w-12 bg-orange-100 rounded-full mb-6 mx-auto"></div>
+            <div id="letter-card" class="bg-white rounded-3xl p-8 shadow-2xl relative border-2 border-orange-50 bounce-in">
+                <p class="text-[10px] font-bold text-orange-300 uppercase tracking-widest text-center mb-1">Spesial Untuk:</p>
+                <h3 id="display-name" class="text-3xl font-bold text-center mb-4 text-orange-950" style="font-family: 'Caveat', cursive;">Nama</h3>
                 
-                <div id="display-message" class="text-gray-600 leading-relaxed text-sm sm:text-base whitespace-pre-line bg-orange-50/50 p-4 rounded-2xl border border-dashed border-orange-200">
+                <div id="cookie-area" class="screen-hidden mb-6 p-4 bg-orange-50 rounded-2xl border-2 border-dashed border-orange-200 text-center cookie-reveal">
+                    <div id="cookie-img" class="text-5xl mb-2">🍪</div>
+                    <div id="cookie-name" class="font-bold text-orange-800 text-sm uppercase">Kue Kamu</div>
+                </div>
+
+                <div id="display-message" class="text-gray-600 leading-relaxed text-sm sm:text-base whitespace-pre-line border-t border-orange-50 pt-4 italic">
                     </div>
 
-                <div class="mt-8 pt-6 border-t border-orange-50 flex items-center justify-between">
-                    <span class="text-[10px] text-orange-200 font-bold tracking-tighter">✨ EID MUBARAK 2026</span>
-                    <span class="text-pink-400 text-lg flex items-center gap-1">❤️ <span class="text-[10px] font-bold text-gray-400 uppercase">DARI TEMANMU</span></span>
+                <div class="mt-8 flex items-center justify-end gap-2">
+                    <span class="text-pink-500 text-xl">❤️</span>
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Dari Thordey</span>
                 </div>
             </div>
-            <button onclick="location.reload()" class="mt-8 w-full max-w-sm mx-auto py-3 bg-white text-orange-400 font-bold rounded-xl border-2 border-orange-100 shadow-sm flex items-center justify-center gap-2">
-                <i data-lucide="refresh-cw" class="w-4 h-4"></i> Coba Nama Lain
-            </button>
+
+            <div class="mt-8 flex gap-3 w-full max-w-sm mx-auto">
+                <button onclick="location.reload()" class="flex-1 py-3 bg-white text-orange-400 font-bold rounded-xl border-2 border-orange-100 shadow-sm text-xs flex items-center justify-center gap-1">
+                    <i data-lucide="refresh-cw" class="w-3 h-3"></i> Coba Lagi
+                </button>
+                <button id="btn-cookie" onclick="showCookie()" class="flex-1 py-3 bg-orange-100 text-orange-600 font-bold rounded-xl border-2 border-orange-200 shadow-sm text-xs flex items-center justify-center gap-1">
+                    <i data-lucide="cookie" class="w-3 h-3"></i> Kue Lebaranmu!
+                </button>
+            </div>
         </div>
 
     </div>
 
     <script>
+        let userInitial = '';
         const letterData = {
             'ABCDE': "Selamat merayakan Idul Fitri, semoga hari-harimu selalu dipenuhi senyuman dan kebahagiaan.\n\nHalo, Selamat Hari Raya Idul Fitri!\n\nDi hari yang suci ini aku ingin mengucapkan mohon maaf lahir dan batin atas segala kesalahan kata maupun sikap yang mungkin pernah terjadi, baik yang disengaja maupun tidak.\n\nSemoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan keberkahan untukmu dan keluargamu.",
             'FGHIJ': "Selamat merayakan Idul Fitri!\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kebahagiaan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama kita saling mengenal ada kata atau sikapku yang kurang berkenan, aku minta maaf ya.\n\nSemoga Idul Fitri ini membawa banyak kebahagiaan, keberkahan, dan kebaikan dalam hidupmu.",
-            'KLMNO': "Selamat merayakan hari kemenangan bersama keluarga. Semoga harimu dipenuhi tawa dan kebahagiaan.\n\nHalo! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kemenangan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama ini ada kata-kata atau sikapku yang kurang baik, aku dengan tulus meminta maaf.\n\nSemoga di hari yang suci ini kamu selalu diberikan kebahagiaan dan kesehatan.",
-            'PQRST': "Selamat merayakan Idul Fitri, semoga hari-harimu selalu penuh kebaikan dan senyuman.\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh berkah ini, aku ingin mengucapkan mohon maaf lahir dan batin. Mungkin selama kita jadi mutual ada kata yang kurang tepat, aku minta maaf ya.\n\nSemoga Idul Fitri ini membawa kebahagiaan dan banyak keberkahan.",
+            'KLMNO': "Selamat merayakan hari kemenangan bersama keluarga. Semoga harimu dipenuhi tawa dan kebahagiaan.\n\nHalo! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kemenangan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama ini ada kata-kata atau sikapku yang kurang baik, aku dengan tulus meminta maaf.",
+            'PQRST': "Selamat merayakan Idul Fitri, semoga hari-harimu selalu penuh kebaikan dan senyuman.\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh berkah ini, aku ingin mengucapkan mohon maaf lahir dan batin. Mungkin selama kita jadi mutual ada kata yang kurang tepat, aku minta maaf ya.",
             'UVWXYZ': "Selamat merayakan hari kemenangan! 🌙\n\nSemoga kita semua selalu diberikan kebaikan di setiap langkah dan selalu dalam lindungan-Nya. Amin!"
         };
 
-        function changeScreen(screenId) {
+        const cookieMap = {
+            'ABCDE': { name: 'Nastar Premium', icon: '🍪' },
+            'FGHIJ': { name: 'Kastengel Keju', icon: '🧀' },
+            'KLMNO': { name: 'Putri Salju', icon: '❄️' },
+            'PQRST': { name: 'Lidah Kucing', icon: '🐱' },
+            'UVWXYZ': { name: 'Sagu Keju', icon: '🧁' }
+        };
+
+        function changeScreen(id) {
             document.querySelectorAll('#app > div').forEach(s => s.classList.add('screen-hidden'));
-            document.getElementById(screenId).classList.remove('screen-hidden');
+            document.getElementById(id).classList.remove('screen-hidden');
             lucide.createIcons();
         }
 
         function processName() {
-            const nameInput = document.getElementById('name-input');
-            const name = nameInput.value.trim();
-            if (!name) return alert("Isi namamu dulu ya ✨");
+            const name = document.getElementById('name-input').value.trim();
+            if (!name) return alert("Isi namamu dulu ya!");
 
-            const firstLetter = name.charAt(0).toUpperCase();
-            let finalMessage = "Selamat Idul Fitri! Mohon maaf lahir dan batin.";
+            userInitial = name.charAt(0).toUpperCase();
+            let msg = "Selamat Lebaran! Mohon maaf lahir dan batin.";
 
             for (const key in letterData) {
-                if (key.includes(firstLetter)) {
-                    finalMessage = letterData[key];
-                    break;
-                }
+                if (key.includes(userInitial)) { msg = letterData[key]; break; }
             }
 
             document.getElementById('display-name').textContent = name;
-            document.getElementById('display-message').textContent = finalMessage;
-            
+            document.getElementById('display-message').textContent = msg;
             changeScreen('screen-greeting');
-            launchConfetti();
         }
 
-        function launchConfetti() {
-            const container = document.getElementById('confetti-container');
-            const colors = ['#FFB74D', '#FF8A65', '#EF5350', '#81C784', '#64B5F6'];
-            for (let i = 0; i < 40; i++) {
-                const p = document.createElement('div');
-                p.className = 'confetti-piece';
-                p.style.left = Math.random() * 100 + 'vw';
-                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                p.style.animationDelay = Math.random() * 2 + 's';
-                p.style.width = (Math.random() * 8 + 4) + 'px';
-                p.style.height = p.style.width;
-                container.appendChild(p);
+        function showCookie() {
+            const area = document.getElementById('cookie-area');
+            const img = document.getElementById('cookie-img');
+            const name = document.getElementById('cookie-name');
+            const btn = document.getElementById('btn-cookie');
+
+            let cookie = { name: 'Kue Berkah', icon: '🥯' };
+            for (const key in cookieMap) {
+                if (key.includes(userInitial)) { cookie = cookieMap[key]; break; }
             }
+
+            img.textContent = cookie.icon;
+            name.textContent = `Kamu Dapat: ${cookie.name}!`;
+            area.classList.remove('screen-hidden');
+            btn.classList.add('opacity-50', 'pointer-events-none');
         }
 
         lucide.createIcons();

@@ -3,143 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amplop Kejutan Lebaran</title>
+    <title>EID_SURPRISE.EXE</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
-            --red-dana: #d32f2f;
-            --gold: #ffca28;
-            --light-bg: #fdf2f2;
+            --win-blue: #000080;
+            --win-grey: #c0c0c0;
+            --win-white: #ffffff;
+            --win-black: #000000;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-bg);
-            margin: 0;
+            background-color: #55aaaa; /* Warna hijau khas Windows jadul */
+            font-family: 'VT323', monospace;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
 
-        .card {
-            background: white;
-            width: 90%;
-            max-width: 400px;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center;
-            border: 4px solid var(--gold);
-            box-sizing: border-box;
+        /* Container Jendela */
+        .window {
+            background: var(--win-grey);
+            width: 100%;
+            max-width: 450px;
+            border: 2px solid;
+            border-color: var(--win-white) var(--win-black) var(--win-black) var(--win-white);
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+            padding: 3px;
         }
 
-        .dana-header {
-            background: var(--red-dana);
+        /* Title Bar */
+        .title-bar {
+            background: linear-gradient(90deg, var(--win-blue), #1084d0);
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             color: white;
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            font-size: 1.2em;
-            letter-spacing: 1px;
+            font-size: 20px;
         }
 
-        p { color: #555; line-height: 1.5; }
+        .title-bar-controls button {
+            width: 20px;
+            height: 20px;
+            font-family: Arial;
+            font-size: 12px;
+            padding: 0;
+            cursor: pointer;
+            background: var(--win-grey);
+            border: 1px solid;
+            border-color: white black black white;
+        }
+
+        /* Konten Dalam */
+        .window-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 { font-size: 32px; margin: 10px 0; color: var(--win-black); }
+        p { font-size: 22px; margin: 10px 0; color: #333; }
 
         input {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            margin: 20px 0;
-            box-sizing: border-box;
-            font-size: 16px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus { border-color: var(--red-dana); }
-
-        .btn-buka {
-            background: var(--gold);
-            color: #333;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 18px;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 5px 15px rgba(255, 202, 40, 0.4);
-            transition: 0.3s;
-        }
-
-        .btn-buka:hover { transform: scale(1.03); }
-
-        /* Tampilan Hasil */
-        #result {
-            display: none;
-            text-align: left;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        .char-icon {
-            font-size: 80px;
-            text-align: center;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .recipient-name {
-            text-align: center;
-            color: var(--red-dana);
-            margin-bottom: 20px;
-            font-size: 1.5em;
-        }
-
-        .letter-content {
-            background: #fff9e6;
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 6px solid var(--gold);
-            font-size: 14px;
-            line-height: 1.8;
-            color: #333;
-            white-space: pre-line; /* Menjaga spasi/paragraf */
-        }
-
-        .btn-reset {
-            margin-top: 20px;
-            width: 100%;
-            background: #f0f0f0;
-            border: none;
             padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            color: #777;
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            border: 2px solid;
+            border-color: black white white black;
+            background: white;
+            box-sizing: border-box;
+            margin: 15px 0;
+            outline: none;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        button.btn-win {
+            padding: 10px 25px;
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            background: var(--win-grey);
+            border: 2px solid;
+            border-color: white black black white;
+            cursor: pointer;
+            outline: none;
         }
+
+        button.btn-win:active {
+            border-color: black white white black;
+            transform: translate(1px, 1px);
+        }
+
+        /* Layar Hasil */
+        #result { display: none; }
+
+        .letter-box {
+            background: white;
+            border: 2px solid black;
+            padding: 15px;
+            text-align: left;
+            font-size: 18px;
+            line-height: 1.4;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-line;
+            margin-bottom: 20px;
+        }
+
+        .char-sprite { font-size: 60px; margin-bottom: 10px; }
+
+        /* Scrollbar ala jadul */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: var(--win-grey); }
+        ::-webkit-scrollbar-thumb { background: #888; border: 2px solid var(--win-grey); }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <div id="input-screen">
-        <div class="dana-header">🧧 DANA KAGET?</div>
-        <p>Bukan uang, tapi ada pesan spesial yang jauh lebih berharga buat kamu!</p>
-        <input type="text" id="namaInput" placeholder="Masukkan nama kamu..." autocomplete="off">
-        <button class="btn-buka" onclick="bukaAmplop()">BUKA SEKARANG</button>
+<div class="window">
+    <div class="title-bar">
+        <div class="title-bar-text">C:\SURPRISE\EID_MUBARAK.EXE</div>
+        <div class="title-bar-controls">
+            <button>_</button>
+            <button>□</button>
+            <button onclick="location.reload()">×</button>
+        </div>
     </div>
 
-    <div id="result">
-        <span class="char-icon" id="charDisplay">😇</span>
-        <h2 class="recipient-name" id="titleDisplay">Buat Kamu</h2>
-        <div class="letter-content" id="textContent"></div>
-        <button class="btn-reset" onclick="location.reload()">Coba Nama Lain</button>
+    <div class="window-body" id="input-screen">
+        <div class="char-sprite">💾</div>
+        <h2>DANA KAGET?</h2>
+        <p>SYSTEM DETECTING: Surprise Found!<br>Enter your name to unlock:</p>
+        <input type="text" id="namaInput" placeholder="TYPE NAME HERE..." autocomplete="off">
+        <button class="btn-win" onclick="bukaAmplop()">[ RUN PROGRAM ]</button>
+    </div>
+
+    <div class="window-body" id="result">
+        <div class="char-sprite" id="charDisplay">😇</div>
+        <h2 id="titleDisplay">ACCESS GRANTED!</h2>
+        <div class="letter-box" id="textContent"></div>
+        <button class="btn-win" onclick="location.reload()">[ REBOOT ]</button>
     </div>
 </div>
 
@@ -147,7 +152,7 @@
     function bukaAmplop() {
         const nama = document.getElementById('namaInput').value.trim();
         if (!nama) {
-            alert("Masukkan namamu dulu ya!");
+            alert("ERROR: Name required to proceed!");
             return;
         }
 
@@ -155,64 +160,36 @@
         let pesan = "";
         let emoji = "";
 
-        // DATABASE BERDASARKAN ABJAD 
+        // DATA SURAT KAMU
         if ("ABCDE".includes(hurufDepan)) {
             emoji = "😇";
-            pesan = `Selamat merayakan Idul Fitri, semoga hari-harimu selalu dipenuhi senyuman dan kebahagiaan.
-
-Halo, Selamat Hari Raya Idul Fitri!
-
-Di hari yang suci ini aku ingin mengucapkan mohon maaf lahir dan batin atas segala kesalahan kata maupun sikap yang mungkin pernah terjadi, baik yang disengaja maupun tidak.
-
-Semoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan keberkahan untukmu dan keluargamu. Semoga kita semua menjadi pribadi yang lebih baik setelah melewati bulan Ramadan.`;
+            pesan = `Selamat merayakan Idul Fitri, semoga hari-harimu selalu dipenuhi senyuman dan kebahagiaan.\n\nHalo, Selamat Hari Raya Idul Fitri!\n\nDi hari yang suci ini aku ingin mengucapkan mohon maaf lahir dan batin atas segala kesalahan kata maupun sikap yang mungkin pernah terjadi, baik yang disengaja maupun tidak.\n\nSemoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan keberkahan untukmu dan keluargamu. Semoga kita semua menjadi pribadi yang lebih baik setelah melewati bulan Ramadan.`;
         } 
         else if ("FGHIJ".includes(hurufDepan)) {
             emoji = "😎";
-            pesan = `Selamat merayakan Idul Fitri!
-
-Hai! Selamat Hari Raya Idul Fitri.
-
-Di hari yang penuh kebahagiaan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama kita saling mengenal ada kata atau sikapku yang kurang berkenan atau sikap yang tidak menyenangkan, aku benar-benar minta maaf ya.
-
-Terima kasih juga sudah menjadi mutual yang baik. Semoga di hari kemenangan ini kamu dan keluargamu selalu diberikan kesehatan, kebahagiaan, serta keberkahan.`;
+            pesan = `Selamat merayakan Idul Fitri!\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kebahagiaan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama kita saling mengenal ada kata atau sikapku yang kurang berkenan, aku minta maaf ya.\n\nTerima kasih juga sudah menjadi mutual yang baik. Semoga di hari kemenangan ini kamu dan keluargamu selalu diberikan kesehatan, kebahagiaan, serta keberkahan.`;
         } 
         else if ("KLMNO".includes(hurufDepan)) {
             emoji = "🤩";
-            pesan = `Selamat merayakan hari kemenangan bersama keluarga. Semoga harimu dipenuhi tawa dan kebahagiaan.
-
-Halo! Selamat Hari Raya Idul Fitri.
-
-Di hari yang penuh kemenangan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama ini ada kata-kata atau sikapku yang kurang baik, aku dengan tulus meminta maaf.
-
-Semoga di hari yang suci ini kamu selalu diberikan kebahagiaan, kesehatan, dan keberkahan bersama orang-orang tersayang. Terima kasih sudah menjadi mutual yang baik selama ini.`;
+            pesan = `Selamat merayakan hari kemenangan bersama keluarga. Semoga harimu dipenuhi tawa dan kebahagiaan.\n\nHalo! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh kemenangan ini, aku ingin mengucapkan mohon maaf lahir dan batin. Jika selama ini ada kata-kata atau sikapku yang kurang baik, aku dengan tulus meminta maaf.\n\nSemoga di hari yang suci ini kamu selalu diberikan kebahagiaan, kesehatan, dan keberkahan bersama orang-orang tersayang. Terima kasih sudah menjadi mutual yang baik selama ini.`;
         } 
         else if ("PQRST".includes(hurufDepan)) {
             emoji = "✨";
-            pesan = `Selamat merayakan Idul Fitri, semoga hari-harimu selalu penuh kebaikan dan senyuman.
-
-Hai! Selamat Hari Raya Idul Fitri.
-
-Di hari yang penuh berkah ini, aku ingin mengucapkan mohon maaf lahir dan batin. Mungkin selama kita jadi mutual ada kata yang kurang tepat atau sikap yang tidak sengaja menyakiti hati, aku minta maaf ya.
-
-Semoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan banyak keberkahan untukmu dan keluargamu. Terima kasih sudah menjadi mutual yang baik.`;
+            pesan = `Selamat merayakan Idul Fitri, semoga hari-harimu selalu penuh kebaikan dan senyuman.\n\nHai! Selamat Hari Raya Idul Fitri.\n\nDi hari yang penuh berkah ini, aku ingin mengucapkan mohon maaf lahir dan batin. Mungkin selama kita jadi mutual ada kata yang kurang tepat atau sikap yang tidak sengaja menyakiti hati, aku minta maaf ya.\n\nSemoga Idul Fitri ini membawa kebahagiaan, kedamaian, dan banyak keberkahan untukmu dan keluargamu. Terima kasih sudah menjadi mutual yang baik.`;
         } 
         else if ("UVWXYZ".includes(hurufDepan)) {
             emoji = "🌙";
-            pesan = `Selamat merayakan hari kemenangan!
-
-Semoga kita semua selalu diberikan kebaikan di setiap langkah.`;
+            pesan = `Selamat merayakan hari kemenangan! \n\nSemoga kita semua selalu diberikan kebaikan di setiap langkah.`;
         } 
         else {
-            // Default jika simbol atau angka
             emoji = "🎁";
-            pesan = "Halo, selamat Hari Raya Idul Fitri! Mohon maaf lahir dan batin ya. Semoga kebahagiaan selalu menyertaimu.";
+            pesan = "Selamat Hari Raya Idul Fitri! Mohon maaf lahir dan batin ya. Semoga kebahagiaan selalu menyertaimu.";
         }
 
-        // Tampilkan Hasil
         document.getElementById('input-screen').style.display = 'none';
         document.getElementById('result').style.display = 'block';
         document.getElementById('charDisplay').innerText = emoji;
-        document.getElementById('titleDisplay').innerText = "Buat " + nama;
+        document.getElementById('titleDisplay').innerText = "BUAT: " + nama.toUpperCase();
         document.getElementById('textContent').innerText = pesan;
     }
 </script>
